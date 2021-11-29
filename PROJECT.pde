@@ -1,32 +1,30 @@
-Ball[] balls = new Ball[50];
-int ballsHit = 0;
+Ball ball;
 Hole hole;
-
+float x = 300;
+float y = 300;
 public void setup() {
-  size(1000, 800);
-  noStroke();
+  size(600, 600);
   ellipseMode(RADIUS);
-  hole = new Hole((int)random(100, 900), (int)random(100, 700));
+  hole = new Hole((int)random(0, 600), (int)random(0, 600));
+  ball = new Ball((int)random(0, 600), (int)random(0, 600));
 }
 
 public void draw() {
   background(0, 255, 0);
-   for (int i = 0; i < balls.length; i++) {
-     if (balls[i] != null){
-  balls[i].show(); // needs to show before mouse pressed
-     }
-   }
-  if (mousePressed)hitBall();
+  PowerLine();
+  ball.show();
     hole.show();
-  for (int i = 0; i < balls.length; i++) {
-    if (balls[i] != null) {
-    balls[i].move();
-    }
   }
-}
-
-public void hitBall() {
-  Ball ball = new Ball(new PVector(mouseX, mouseY));
-  balls[ballsHit] = ball;
-  ballsHit++;
-}
+  void PowerLine() {
+    if (mousePressed == true) {
+   //stroke(#FFFFFF);
+   line(x, y, mouseX, mouseY);
+    }
+    x = ball.pos.x;
+    y = ball.pos.y;
+  }
+  
+  void mouseReleased() {
+    ball.acc.x = (x - mouseX)/66;
+    ball.acc.y = (y - mouseY)/66;
+  }
