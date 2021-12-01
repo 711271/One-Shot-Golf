@@ -1,6 +1,7 @@
 public class Hole {
   private PVector pos;
   private final int SIZE = 15;
+  public boolean active = true;
 
   public Hole(int x, int y) {
     pos = new PVector(x, y);
