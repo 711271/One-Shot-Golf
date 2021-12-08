@@ -1,7 +1,8 @@
-public class Ball {
+public class Ball { //<>//
   private PVector pos, vel, acc;
   private final int SIZE = 10;
   private int SCORE = 0;
+  float fric = 0.98;
 
   public Ball(int x, int y, int a, int b) {
     pos = new PVector(x, y);
@@ -12,25 +13,36 @@ public class Ball {
   public void show() {
     fill(255, 255, 255);
     circle(pos.x, pos.y, SIZE);
+    fill(0);
+    text("Score: "+SCORE, 150, 20);
   }
 
-  public void move() {
-    vel.add(acc);
-    pos.add(vel);
-    if ((pos.x-SIZE/2>width)||(pos.x+SIZE/2<0)) {
-      vel.x=vel.x*-1;
-    }
-    if ((pos.y+SIZE/2>height)||(pos.y-SIZE/2<0)) {
-      vel.y=vel.y*-1;
-    }
+public void move() {
+  vel.mult(fric);
+  pos.add(vel);
+  if ((pos.x-SIZE/2>width)||(pos.x+SIZE/2<0)) {
+    vel.x=vel.x*-1;
   }
-  public void score(Hole h) {
-    double dist = PVector.sub(this.pos, h.pos).mag();
-    if (dist <= this.SIZE / 2 + h.SIZE / 2) { //<>//
-      h.pos.x = random(0+SIZE,600-SIZE);
-      h.pos.y = random(0+SIZE,600-SIZE);
-      SCORE++;
-      System.out.println(SCORE);
-    }
+  if ((pos.y+SIZE/2>height)||(pos.y-SIZE/2<0)) {
+    vel.y=vel.y*-1;
   }
+}
+public void score(Hole h) {
+  double dist = PVector.sub(this.pos, h.pos).mag();
+  if (dist <= this.SIZE / 2 + h.SIZE / 2) {
+    h.pos.x = random(0+SIZE, 600-SIZE);
+    h.pos.y = random(0+SIZE, 600-SIZE);
+    SCORE++;
+    System.out.println(SCORE);
+  }
+}
+
+public void slowed(Sand s) {
+  double dist = PVector.sub(this.pos, s.pos).mag(); //<>//
+  if (dist <= this.SIZE / 2 + s.SIZE / 2) {
+    System.out.println("g");
+    fric += 2;
+  }
+  else {fric = 0.98;}
+}
 }
