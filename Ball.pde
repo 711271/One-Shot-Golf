@@ -13,7 +13,7 @@ public class Ball { //<>//
   public void show() {
     fill(255, 255, 255);
     circle(pos.x, pos.y, SIZE);
-    fill(0);
+    fill(255);
     text("Score: "+SCORE, 150, 20);
   }
 
@@ -33,15 +33,13 @@ public void score(Hole h) {
     h.pos.x = random(0+SIZE, 600-SIZE);
     h.pos.y = random(0+SIZE, 600-SIZE);
     SCORE++;
-    System.out.println(SCORE);
   }
 }
 
 public void slowed(Sand s) {
   double dist = PVector.sub(this.pos, s.pos).mag(); //<>//
-  if (dist <= this.SIZE / 2 + s.SIZE / 2) {
-    System.out.println("g");
-    fric += 2;
+  if (dist <= this.SIZE/2 + (s.SIZE/2)) {
+    fric = .8;
   }
   else {fric = 0.98;}
 }

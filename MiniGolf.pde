@@ -1,12 +1,14 @@
 Ball ball;
 Hole hole;
 Sand sand;
+PImage G;
 float x;
 float y;
 float ballSpeed = 50;
 int Strokes = 0;
 public void setup() {
-  size(600, 600);
+  size(900, 900);
+  G = loadImage("Grass.jpg");
   ellipseMode(RADIUS);
   hole = new Hole((int)random(0, 600), (int)random(0, 600));
   ball = new Ball((int)random(0, 600), (int)random(0, 600), 0, 0);
@@ -14,17 +16,18 @@ public void setup() {
 }
 
 public void draw() {
-  background(0, 255, 0);
+  background(G);
   sand.show();
   PowerLine();
   ball.score(hole);
+  ball.slowed(sand);
   ball.show();
   ball.move();
   hole.show();
   
   
   textSize(20);
-  fill(0);
+  fill(255);
   text("Strokes: "+Strokes, 5, 20);
 }
 void PowerLine() {
